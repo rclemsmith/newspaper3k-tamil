@@ -64,16 +64,19 @@ class StopWords(object):
     def __init__(self, language='en'):
         if language not in self._cached_stop_words:
             path = os.path.join('text', 'stopwords-%s.txt' % language)
+            print("path is ",path)
             self._cached_stop_words[language] = \
                 set(FileHelper.loadResourceFile(path).splitlines())
         self.STOP_WORDS = self._cached_stop_words[language]
 
     def remove_punctuation(self, content):
         # code taken form
-        # http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python
+        # http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python        
         content_is_unicode = isinstance(content, str)
+        #print("in remove punctuation ",content_is_unicode)
         if content_is_unicode:
             content = content.encode('utf-8')
+            #content.encode('tace')
         trans_table = {ord(c): None for c in string.punctuation}
         stripped_input = content.decode('utf-8').translate(trans_table)
 
@@ -164,6 +167,30 @@ class StopWordsHindi(StopWords):
     """
     def __init__(self, language='hi'):
         super(StopWordsHindi, self).__init__(language='hi')
+
+    def get_stopword_count(self, content):
+        if not content:
+            return WordStats()
+        ws = WordStats()
+        stripped_input = self.remove_punctuation(content)
+        candidate_words = self.candidate_words(stripped_input)
+        overlapping_stopwords = []
+        c = 0
+        for w in candidate_words:
+            c += 1
+            for stop_word in self.STOP_WORDS:
+                overlapping_stopwords.append(stop_word)
+
+        ws.set_word_count(c)
+        ws.set_stopword_count(len(overlapping_stopwords))
+        ws.set_stop_words(overlapping_stopwords)
+        return ws
+
+class StopWordsTamil(StopWords):
+    """Tamil segmentation
+    """
+    def __init__(self, language='ta'):
+        super(StopWordsTamil, self).__init__(language='ta')
 
     def get_stopword_count(self, content):
         if not content:

@@ -14,7 +14,7 @@ import logging
 
 from .parsers import Parser
 from .text import (StopWords, StopWordsArabic, StopWordsChinese,
-                   StopWordsKorean, StopWordsHindi, StopWordsJapanese, StopWordsThai)
+                   StopWordsKorean, StopWordsHindi, StopWordsJapanese, StopWordsThai,StopWordsTamil)
 from .version import __version__
 
 log = logging.getLogger(__name__)
@@ -85,6 +85,7 @@ class Configuration(object):
         raise Exception('wtf are you doing?')
 
     def set_language(self, language):
+        print("in config set lang ",language)
         """Language setting must be set in this method b/c non-occidental
         (western) languages require a separate stopwords class.
         """
@@ -118,6 +119,8 @@ class Configuration(object):
             return StopWordsJapanese
         elif language == 'th':
             return StopWordsThai
+        elif language == 'ta':
+            return StopWordsTamil
         return StopWords
 
     @staticmethod

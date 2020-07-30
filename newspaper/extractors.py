@@ -65,9 +65,12 @@ class ContentExtractor(object):
         is not latin based
         """
         if meta_lang:
+            print("in extractor update_language ",meta_lang)
             self.language = meta_lang
             self.stopwords_class = \
                 self.config.get_stopwords_class(meta_lang)
+        else:
+            print("lang not updated  ",meta_lang)
 
     def get_authors(self, doc):
         """Fetch the authors of the article, return as a list
@@ -425,6 +428,7 @@ class ContentExtractor(object):
         if attr:
             value = attr[:2]
             if re.search(RE_LANG, value):
+                print("in get_meta_lang ", value.lower())
                 return value.lower()
 
         return None

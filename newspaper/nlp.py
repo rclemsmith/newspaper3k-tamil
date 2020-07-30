@@ -27,7 +27,7 @@ def load_stopwords(language):
     
     # stopwords for nlp in English are not the regular stopwords
     # to pass the tests
-    # can be changed with the tests
+    # can be changed with the teststokenize
     if language == 'en':
         stopwordsFile = settings.NLP_STOPWORDS_EN
     else:

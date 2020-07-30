@@ -58,10 +58,13 @@ class Article(object):
         self.extractor = ContentExtractor(self.config)
 
         if source_url == '':
+            print("source url is empty")
             scheme = urls.get_scheme(url)
             if scheme is None:
                 scheme = 'http'
             source_url = scheme + '://' + urls.get_domain(url)
+            print("url is ",url)
+            print("source url is ",source_url)
 
         if source_url is None or source_url == '':
             raise ArticleException('input url bad format')
@@ -70,6 +73,7 @@ class Article(object):
         self.source_url = source_url
 
         self.url = urls.prepare_url(url, self.source_url)
+        print("self.url is ",self.url)
 
         self.title = title
 
@@ -188,10 +192,12 @@ class Article(object):
         """
         if input_html is None:
             parsed_url = urlparse(self.url)
+            print("parsed url ",parsed_url)
             if parsed_url.scheme == "file":
                 html = self._parse_scheme_file(parsed_url.path)
             else:
                 html = self._parse_scheme_http()
+                #print("html is ",html)
             if html is None:
                 log.debug('Download failed on URL %s because of %s' %
                           (self.url, self.download_exception_msg))
@@ -213,6 +219,7 @@ class Article(object):
         self.throw_if_not_downloaded_verbose()
 
         self.doc = self.config.get_parser().fromstring(self.html)
+        print("doc is ",self.doc)
         self.clean_doc = copy.deepcopy(self.doc)
 
         if self.doc is None:
@@ -233,6 +240,7 @@ class Article(object):
         self.set_authors(authors)
 
         meta_lang = self.extractor.get_meta_lang(self.clean_doc)
+        print("in article.py lang is ",meta_lang)
         self.set_meta_language(meta_lang)
 
         if self.config.use_meta_language:
@@ -518,6 +526,7 @@ class Article(object):
         """
         if meta_lang and len(meta_lang) >= 2 and \
            meta_lang in get_available_languages():
+            print("in article set meta ",meta_lang)
             self.meta_lang = meta_lang[:2]
 
     def set_meta_keywords(self, meta_keywords):
