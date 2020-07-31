@@ -31,7 +31,7 @@ class OutputFormatter(object):
         is not latin based
         '''
         if meta_lang:
-            print("in op formatter update lang")
+            #print("in op formatter update lang")
             self.language = meta_lang
             self.stopwords_class = \
                 self.config.get_stopwords_class(meta_lang)

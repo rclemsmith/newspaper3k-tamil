@@ -64,7 +64,7 @@ class StopWords(object):
     def __init__(self, language='en'):
         if language not in self._cached_stop_words:
             path = os.path.join('text', 'stopwords-%s.txt' % language)
-            print("path is ",path)
+            #print("path is ",path)
             self._cached_stop_words[language] = \
                 set(FileHelper.loadResourceFile(path).splitlines())
         self.STOP_WORDS = self._cached_stop_words[language]

@@ -6,6 +6,5 @@ url = 'https://www.hindutamil.in/news/crime/567214-vijayakumar-arrested.html'
 #url ="https://www.indiatv.in/india/national-karti-chidambaram-on-ram-mandir-no-need-any-new-place-of-worship-729897"
 article = Article(url)
 article.download()
-#print(article.html)
 article.parse()
-print("content is",article.text)
+print(article.text)
