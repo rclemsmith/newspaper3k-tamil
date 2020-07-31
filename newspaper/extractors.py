@@ -426,7 +426,7 @@ class ContentExtractor(object):
         if attr:
             value = attr[:2]
             if re.search(RE_LANG, value):
-                #print("in get_meta_lang ", value.lower())
+                print("in get_meta_lang ", value.lower())
                 return value.lower()
 
         return None
